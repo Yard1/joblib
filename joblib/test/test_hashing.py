@@ -14,7 +14,13 @@ import gc
 import io
 import collections
 import itertools
-import pickle
+if sys.version_info < (3, 8):
+    try:
+        import pickle5 as pickle
+    except ImportError:
+        import pickle
+else:
+    import pickle
 import random
 from concurrent.futures import ProcessPoolExecutor
 from decimal import Decimal

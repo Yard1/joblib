@@ -12,8 +12,14 @@ import shutil
 import os
 import os.path
 import pathlib
-import pickle
 import sys
+if sys.version_info < (3, 8):
+    try:
+        import pickle5 as pickle
+    except ImportError:
+        import pickle
+else:
+    import pickle
 import time
 import datetime
 import textwrap

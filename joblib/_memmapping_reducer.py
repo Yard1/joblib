@@ -15,10 +15,17 @@ import tempfile
 import time
 import warnings
 import weakref
+import sys
 from uuid import uuid4
 from multiprocessing import util
 
-from pickle import whichmodule, loads, dumps, HIGHEST_PROTOCOL, PicklingError
+if sys.version_info < (3, 8):
+    try:
+        from pickle5 import whichmodule, loads, dumps, HIGHEST_PROTOCOL, PicklingError
+    except ImportError:
+        from pickle import whichmodule, loads, dumps, HIGHEST_PROTOCOL, PicklingError
+else:
+    from pickle import whichmodule, loads, dumps, HIGHEST_PROTOCOL, PicklingError
 
 try:
     WindowsError

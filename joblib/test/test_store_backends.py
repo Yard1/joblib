@@ -1,9 +1,16 @@
+import sys
 try:
     # Python 2.7: use the C pickle to speed up
     # test_concurrency_safe_write which pickles big python objects
     import cPickle as cpickle
 except ImportError:
-    import pickle as cpickle
+    if sys.version_info < (3, 8):
+        try:
+            import pickle5 as pickle
+        except ImportError:
+            import pickle
+    else:
+        import pickle
 import functools
 import time
 

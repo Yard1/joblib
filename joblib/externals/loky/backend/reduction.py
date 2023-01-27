@@ -16,7 +16,15 @@ import sys
 import os
 
 from multiprocessing import util
-from pickle import loads, HIGHEST_PROTOCOL
+has_pickle5 = False
+if sys.version_info < (3, 8):
+    try:
+        has_pickle5 = True
+        from pickle5 import loads, HIGHEST_PROTOCOL
+    except ImportError:
+        from pickle import loads, HIGHEST_PROTOCOL
+else:
+    from pickle import loads, HIGHEST_PROTOCOL
 
 ###############################################################################
 # Enable custom pickling in Loky.
@@ -83,7 +91,7 @@ try:
     DEFAULT_ENV = "cloudpickle"
 except ImportError:
     # If cloudpickle is not present, fallback to pickle
-    DEFAULT_ENV = "pickle"
+    DEFAULT_ENV = "pickle5" if has_pickle5 else "pickle"
 
 ENV_LOKY_PICKLER = os.environ.get("LOKY_PICKLER", DEFAULT_ENV)
 _LokyPickler = None

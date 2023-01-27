@@ -23,9 +23,14 @@ try:
 except NameError:
     WindowsError = type(None)
 
-from pickle import Pickler
+if sys.version_info < (3, 8):
+    try:
+        from pickle5 import Pickler, HIGHEST_PROTOCOL
+    except ImportError:
+        from pickle import Pickler, HIGHEST_PROTOCOL
+else:
+    from pickle import Pickler, HIGHEST_PROTOCOL
 
-from pickle import HIGHEST_PROTOCOL
 from io import BytesIO
 
 from ._memmapping_reducer import get_memmapping_reducers

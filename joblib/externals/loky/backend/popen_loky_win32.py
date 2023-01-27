@@ -2,7 +2,14 @@ import os
 import sys
 import msvcrt
 import _winapi
-from pickle import load
+import sys
+if sys.version_info < (3, 8):
+    try:
+        from pickle5 import load
+    except ImportError:
+        from pickle import load
+else:
+    from pickle import load
 from multiprocessing import process, util
 from multiprocessing.context import get_spawning_popen, set_spawning_popen
 from multiprocessing.popen_spawn_win32 import Popen as _Popen

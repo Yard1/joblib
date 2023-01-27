@@ -10,7 +10,13 @@ import warnings
 import gzip
 import zlib
 import bz2
-import pickle
+if sys.version_info < (3, 8):
+    try:
+        import pickle5 as pickle
+    except ImportError:
+        import pickle
+else:
+    import pickle
 import socket
 from contextlib import closing
 import mmap

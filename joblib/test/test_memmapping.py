@@ -3,7 +3,13 @@ import mmap
 import sys
 import platform
 import gc
-import pickle
+if sys.version_info < (3, 8):
+    try:
+        import pickle5 as pickle
+    except ImportError:
+        import pickle
+else:
+    import pickle
 import itertools
 from time import sleep
 import subprocess

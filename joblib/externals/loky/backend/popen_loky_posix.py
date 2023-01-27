@@ -6,7 +6,13 @@
 import os
 import sys
 import signal
-import pickle
+if sys.version_info < (3, 8):
+    try:
+        import pickle5 as pickle
+    except ImportError:
+        import pickle
+else:
+    import pickle
 from io import BytesIO
 from multiprocessing import util, process
 from multiprocessing.connection import wait
